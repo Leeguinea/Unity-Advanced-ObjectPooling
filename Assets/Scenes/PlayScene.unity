@@ -15980,7 +15980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[0].size
-      value: 2
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[1].name
@@ -15988,7 +15988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[1].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[2].name
@@ -15996,7 +15996,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[2].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[3].name
@@ -16004,7 +16004,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[3].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[4].name
@@ -16012,7 +16012,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[4].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[5].name
@@ -16020,7 +16020,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[5].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[6].name
@@ -16028,7 +16028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[6].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[7].name
@@ -16036,7 +16036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[7].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[8].name
@@ -16044,7 +16044,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[8].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[9].name
@@ -16052,7 +16052,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[9].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[10].name
@@ -16060,7 +16060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[10].size
-      value: 6
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 4390146500408511829, guid: b4f963a9663b0aa4a8970ad6ea450ae7, type: 3}
       propertyPath: _poolConfigs.Array.data[0].prefab

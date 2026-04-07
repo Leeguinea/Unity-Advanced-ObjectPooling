@@ -57,6 +57,7 @@ public class PoolManager : MonoBehaviour
         return obj;
     }
 
+    //Queue에서 아이템 생성 및 꺼내기 
     public GameObject GetItem(GameObject prefab)
     {
         string key = prefab.name;
