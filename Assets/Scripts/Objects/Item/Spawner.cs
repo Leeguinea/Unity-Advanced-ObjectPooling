@@ -32,6 +32,18 @@ public class Spawner : MonoBehaviour
         StartCoroutine(SpawnRoutine());
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            Debug.Log("2000개 집중 스폰 테스트 시작");
+            for (int i = 0; i < 2000; i++)
+            {
+                SpawnItem();
+            }
+        }
+    }
+
     void StartSpawnRountine()
     {
         StartCoroutine(SpawnRoutine());
