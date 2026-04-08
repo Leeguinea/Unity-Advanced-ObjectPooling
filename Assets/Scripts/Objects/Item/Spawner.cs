@@ -101,7 +101,7 @@ public class Spawner : MonoBehaviour
             
         Vector3 spawnPos = new Vector3(finalX, 17f, finalZ);
 
-        GameObject item = PoolManager.Instance.GetItem(selectedPrefab);
+        GameObject item = PoolManager.Instance.GetItem(selectedPrefab); //PoolManager > GetItem
         item.transform.position = spawnPos;
         item.transform.rotation = Quaternion.identity;
     }

@@ -22,6 +22,7 @@ public class PoolManager : MonoBehaviour
     // 실제 오브젝트들을 담아둘 창고
     private Dictionary<int, Queue<GameObject>> _pools = new Dictionary<int, Queue<GameObject>>();
     private Dictionary<GameObject, PoolItem> _itemMap = new Dictionary<GameObject, PoolItem>();
+    private Dictionary<int, Pool> _poolMap = new Dictionary<int, Pool>();
 
     void Awake()
     {
@@ -40,6 +41,7 @@ public class PoolManager : MonoBehaviour
 
             int key = pool.prefab.GetInstanceID();
 
+            //_pools
             if (!_pools.ContainsKey(key))
             {
                 _pools.Add(key, new Queue<GameObject>());
@@ -50,6 +52,12 @@ public class PoolManager : MonoBehaviour
                     obj.SetActive(false);
                     _pools[key].Enqueue(obj);
                 }
+            }
+
+            //코루틴_실행중인지 정보
+            if(!_poolMap.ContainsKey(key))
+            {
+                _poolMap.Add(key, pool);
             }
         }
     }
@@ -73,26 +81,19 @@ public class PoolManager : MonoBehaviour
         int key = prefab.GetInstanceID();
 
         // 만약 풀이 아예 없다면 새로 생성 (예외 방지)
-        if (!_pools.ContainsKey(key))
-            _pools.Add(key, new Queue<GameObject>());
+        if (!_pools.ContainsKey(key)) _pools.Add(key, new Queue<GameObject>());
         
-        foreach (Pool p in _poolConfigs)
-        {
-            if(p.prefab == prefab)
-            {
-                // 개수가 0일 때만 코루틴 돌림. 
-                if (p.isGenerate == false && _pools[key].Count == 0)
-                {
-                    p.isGenerate = true;
-                    //에러 방지로 1개 생성 
-                    GameObject tempObj = CreateNewObject(prefab);
-                    tempObj.SetActive(true);
-                    _pools[key].Enqueue(tempObj);
+        Pool p = _poolMap[key];
 
-                    StartCoroutine(FillPoolRoutine(p, 100));
-                }
-                break;
-            }
+        if (p.isGenerate == false && _pools[key].Count == 0)
+        {
+            p.isGenerate = true;
+            //에러 방지로 1개 생성 
+            GameObject tempObj = CreateNewObject(prefab);
+            tempObj.SetActive(true);
+            _pools[key].Enqueue(tempObj);
+
+            StartCoroutine(FillPoolRoutine(p, 100));
         }
 
         //아이템 꺼내기
