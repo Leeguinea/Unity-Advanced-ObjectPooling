@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class PoolManager : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class PoolManager : MonoBehaviour
         public string name;          // 풀의 이름 (관리용)
         public GameObject prefab;    // 원본 프리팹
         public int size;             // 미리 생성할 개수
+        public bool isGenerate = false; //코루틴중인지 확인  
     }
 
     [Header("Pool Configurations")]
@@ -52,11 +54,11 @@ public class PoolManager : MonoBehaviour
         }
     }
 
+    //프리팹 분류
     private GameObject CreateNewObject(GameObject prefab)
     {
         GameObject obj = Instantiate(prefab);
 
-        //바코드 붙여주기
         PoolItem item = obj.AddComponent<PoolItem>();
         item.myID = prefab.GetInstanceID();
 
@@ -64,32 +66,60 @@ public class PoolManager : MonoBehaviour
         return obj;
     }
 
-    //Queue에서 아이템 생성 및 꺼내기 
+
+    //아이템 꺼내기 
     public GameObject GetItem(GameObject prefab)
     {
         int key = prefab.GetInstanceID();
 
-        // 1. 만약 풀이 아예 없다면 새로 생성 (예외 방지)
+        // 만약 풀이 아예 없다면 새로 생성 (예외 방지)
         if (!_pools.ContainsKey(key))
             _pools.Add(key, new Queue<GameObject>());
-      
-        // 2. 풀에 사용 가능한 오브젝트가 있다면 꺼내기
-        if (_pools[key].Count == 0)
+        
+        foreach (Pool p in _poolConfigs)
         {
-            int fillSize = 100;
-            for(int i = 0; i < fillSize; i++)
+            if(p.prefab == prefab)
             {
-                GameObject obj = CreateNewObject(prefab);
-                obj.SetActive(false);
-                _pools[key].Enqueue(obj);
+                // 개수가 0일 때만 코루틴 돌림. 
+                if (p.isGenerate == false && _pools[key].Count == 0)
+                {
+                    p.isGenerate = true;
+                    //에러 방지로 1개 생성 
+                    GameObject tempObj = CreateNewObject(prefab);
+                    tempObj.SetActive(true);
+                    _pools[key].Enqueue(tempObj);
+
+                    StartCoroutine(FillPoolRoutine(p, 100));
+                }
+                break;
             }
         }
+
+        //아이템 꺼내기
         GameObject useObj = _pools[key].Dequeue();
         useObj.SetActive(true);
         return useObj;
     }
 
-    // 사용이 끝난 아이템을 다시 창고로 반납할 때 사용
+    //아이템 생성
+    private IEnumerator FillPoolRoutine(Pool p, int count)
+    {
+        int key = p.prefab.GetInstanceID();
+
+        for (int i = 0; i < count; i++)
+        {
+            GameObject obj = CreateNewObject(p.prefab);
+            obj.SetActive(false);
+            _pools[key].Enqueue(obj);
+
+            if (i % 5 == 0)
+                yield return null;
+        }
+        p.isGenerate = false;
+    }
+
+
+    // 사용된 오브젝트 반납
     public void ReturnItem(GameObject obj)
     {
         if(_itemMap.TryGetValue(obj, out PoolItem item))
