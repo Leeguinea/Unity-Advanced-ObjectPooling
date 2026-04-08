@@ -18,7 +18,8 @@ public class PoolManager : MonoBehaviour
     private List<Pool> _poolConfigs; // 인스펙터에서 11종을 각각 설정 가능
 
     // 실제 오브젝트들을 담아둘 창고
-    private Dictionary<string, Queue<GameObject>> _pools = new Dictionary<string, Queue<GameObject>>();
+    private Dictionary<int, Queue<GameObject>> _pools = new Dictionary<int, Queue<GameObject>>();
+    private Dictionary<GameObject, PoolItem> _itemMap = new Dictionary<GameObject, PoolItem>();
 
     void Awake()
     {
@@ -35,7 +36,8 @@ public class PoolManager : MonoBehaviour
         {
             if (pool.prefab == null) continue;
 
-            string key = pool.prefab.name;
+            int key = pool.prefab.GetInstanceID();
+
             if (!_pools.ContainsKey(key))
             {
                 _pools.Add(key, new Queue<GameObject>());
@@ -43,6 +45,7 @@ public class PoolManager : MonoBehaviour
                 for (int i = 0; i < pool.size; i++)
                 {
                     GameObject obj = CreateNewObject(pool.prefab);
+                    obj.SetActive(false);
                     _pools[key].Enqueue(obj);
                 }
             }
@@ -51,16 +54,20 @@ public class PoolManager : MonoBehaviour
 
     private GameObject CreateNewObject(GameObject prefab)
     {
-        GameObject obj = Instantiate(prefab, transform);
-        obj.name = prefab.name;
-        obj.SetActive(false); // 생성 직후에는 비활성화
+        GameObject obj = Instantiate(prefab);
+
+        //바코드 붙여주기
+        PoolItem item = obj.AddComponent<PoolItem>();
+        item.myID = prefab.GetInstanceID();
+
+        _itemMap.Add(obj, item);
         return obj;
     }
 
     //Queue에서 아이템 생성 및 꺼내기 
     public GameObject GetItem(GameObject prefab)
     {
-        string key = prefab.name;
+        int key = prefab.GetInstanceID();
 
         // 1. 만약 풀이 아예 없다면 새로 생성 (예외 방지)
         if (!_pools.ContainsKey(key))
@@ -77,21 +84,19 @@ public class PoolManager : MonoBehaviour
         }
 
         // 3. 풀이 비어있다면 즉석에서 새로 생성해서 전달
-        return CreateNewObject(prefab);
+        GameObject newObj = CreateNewObject(prefab);
+        newObj.SetActive(true); // 새로 만들었으니 바로 쓰도록 켜주기!
+        return newObj;
     }
 
     // 사용이 끝난 아이템을 다시 창고로 반납할 때 사용
     public void ReturnItem(GameObject obj)
     {
-        string key = obj.name;
-        if (_pools.ContainsKey(key))
+        if(_itemMap.TryGetValue(obj, out PoolItem item))
         {
+            int Key = item.myID;
             obj.SetActive(false);
-            _pools[key].Enqueue(obj);
-        }
-        else
-        {
-            Destroy(obj); // 혹시 모를 예외 시 삭제
+            _pools[Key].Enqueue(obj);
         }
     }
 }
