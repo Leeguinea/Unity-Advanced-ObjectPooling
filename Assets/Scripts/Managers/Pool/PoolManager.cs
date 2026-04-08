@@ -71,22 +71,22 @@ public class PoolManager : MonoBehaviour
 
         // 1. 만약 풀이 아예 없다면 새로 생성 (예외 방지)
         if (!_pools.ContainsKey(key))
-        {
             _pools.Add(key, new Queue<GameObject>());
-        }
-
+      
         // 2. 풀에 사용 가능한 오브젝트가 있다면 꺼내기
-        if (_pools[key].Count > 0)
+        if (_pools[key].Count == 0)
         {
-            GameObject obj = _pools[key].Dequeue();
-            obj.SetActive(true);
-            return obj;
+            int fillSize = 100;
+            for(int i = 0; i < fillSize; i++)
+            {
+                GameObject obj = CreateNewObject(prefab);
+                obj.SetActive(false);
+                _pools[key].Enqueue(obj);
+            }
         }
-
-        // 3. 풀이 비어있다면 즉석에서 새로 생성해서 전달
-        GameObject newObj = CreateNewObject(prefab);
-        newObj.SetActive(true); // 새로 만들었으니 바로 쓰도록 켜주기!
-        return newObj;
+        GameObject useObj = _pools[key].Dequeue();
+        useObj.SetActive(true);
+        return useObj;
     }
 
     // 사용이 끝난 아이템을 다시 창고로 반납할 때 사용
