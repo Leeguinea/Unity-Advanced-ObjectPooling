@@ -5,6 +5,7 @@ using System.Collections;
 public class PoolManager : MonoBehaviour
 {
     public static PoolManager Instance;
+    float delay = 3f;
 
     [System.Serializable]
     public class Pool
@@ -99,6 +100,8 @@ public class PoolManager : MonoBehaviour
         //아이템 꺼내기
         GameObject useObj = _pools[key].Dequeue();
         useObj.SetActive(true);
+
+        StartCoroutine(AutoReturn(useObj, delay));
         return useObj;
     }
 
@@ -119,15 +122,24 @@ public class PoolManager : MonoBehaviour
         p.isGenerate = false;
     }
 
-
     // 사용된 오브젝트 반납
     public void ReturnItem(GameObject obj)
     {
-        if(_itemMap.TryGetValue(obj, out PoolItem item))
+        if(!obj.activeSelf) return;
+
+        if (_itemMap.TryGetValue(obj, out PoolItem item))
         {
             int Key = item.myID;
             obj.SetActive(false);
             _pools[Key].Enqueue(obj);
         }
     }
+
+    public IEnumerator AutoReturn(GameObject obj, float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ReturnItem(obj);
+    }
+
+   
 }
