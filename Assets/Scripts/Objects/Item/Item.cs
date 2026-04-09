@@ -38,6 +38,7 @@ public class Item : MonoBehaviour
     private void OnDisable()
     {
         // 비활성화 시 예약된 Invoke 취소 (메모리 관리)
+        CancelInvoke();
         CancelInvoke("ReturnToPool");
     }
 
@@ -53,10 +54,10 @@ public class Item : MonoBehaviour
     // 땅에 닿았을 때 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground") && !_isReturned)
         {
-            // 땅에 닿으면 1초 뒤에 사라지게 함 
-            Invoke("ReturnToPool", 4.0f);
+            CancelInvoke("ReturnToPool");
+            Invoke("ReturnToPool", 3.0f);
         }
     }
 
